@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { extractTextFromPDF } from "../services/pdfService";
+import ATSTip from "./ATSTip";
 import styles from "./CVInput.module.css";
 
 export default function CVInput({ onSubmit, loading }) {
@@ -80,6 +81,8 @@ export default function CVInput({ onSubmit, loading }) {
       >
         {loading ? "Söker…" : "Hitta jobb"}
       </button>
+
+      <ATSTip cvText={cvText} />
     </form>
   );
 }
