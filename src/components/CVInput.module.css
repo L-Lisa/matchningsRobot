@@ -1,0 +1,103 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.orText {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.pdfButton {
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2563eb;
+  background: transparent;
+  border: 2px solid #2563eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pdfButton:hover:not(:disabled) {
+  background: #2563eb;
+  color: #fff;
+}
+
+.pdfButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.6;
+  color: #2d2d2d;
+  background: #ffffff;
+  border: 2px solid #d0d7e3;
+  border-radius: 10px;
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.textarea:disabled {
+  background: #f4f6fb;
+  cursor: not-allowed;
+}
+
+.button {
+  align-self: flex-start;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  background: #93b4f5;
+  cursor: not-allowed;
+}

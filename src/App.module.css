@@ -1,0 +1,87 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f0f4fb;
+}
+
+.header {
+  background: #1a1a2e;
+  color: #ffffff;
+  padding: 40px 24px 36px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #a5b4d4;
+  margin: 0;
+  max-width: 520px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+.main {
+  flex: 1;
+  max-width: 760px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.errorBox {
+  background: #fff1f1;
+  border: 1px solid #fca5a5;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.errorMsg {
+  color: #b91c1c;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.retryButton {
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #dc2626;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retryButton:hover {
+  background: #b91c1c;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.footer a {
+  color: #64a0e8;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
