@@ -66,45 +66,47 @@ export default function CVInput({ onSubmit, loading, region, onRegionChange }) {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.labelRow}>
-        <label className={styles.label} htmlFor="cv">
-          Klistra in ditt CV
-        </label>
-        <span className={styles.orText}>eller</span>
-        <button
-          type="button"
-          className={styles.pdfButton}
-          disabled={busy}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          {pdfLoading ? "Läser PDF…" : "Ladda upp PDF"}
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".pdf"
-          className={styles.hiddenInput}
-          onChange={handlePDF}
-        />
-      </div>
+      <div className={styles.controlsRow}>
+        <div className={styles.labelRow}>
+          <label className={styles.label} htmlFor="cv">
+            Klistra in ditt CV
+          </label>
+          <span className={styles.orText}>eller</span>
+          <button
+            type="button"
+            className={styles.pdfButton}
+            disabled={busy}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            {pdfLoading ? "Läser PDF…" : "Ladda upp PDF"}
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pdf"
+            className={styles.hiddenInput}
+            onChange={handlePDF}
+          />
+        </div>
 
-      <div className={styles.locationRow}>
-        <label className={styles.locationLabel} htmlFor="region">
-          Område
-        </label>
-        <select
-          id="region"
-          className={styles.select}
-          value={region}
-          onChange={(e) => onRegionChange(e.target.value)}
-          disabled={busy}
-        >
-          {REGIONS.map((r) => (
-            <option key={r.code} value={r.code}>
-              {r.label}
-            </option>
-          ))}
-        </select>
+        <div className={styles.locationRow}>
+          <label className={styles.locationLabel} htmlFor="region">
+            Område
+          </label>
+          <select
+            id="region"
+            className={styles.select}
+            value={region}
+            onChange={(e) => onRegionChange(e.target.value)}
+            disabled={busy}
+          >
+            {REGIONS.map((r) => (
+              <option key={r.code} value={r.code}>
+                {r.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <textarea
