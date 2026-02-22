@@ -1,12 +1,13 @@
 const BASE_URL = "https://jobsearch.api.jobtechdev.se";
 
-export async function searchJobs(queries) {
+export async function searchJobs(queries, regionCode = "") {
   const allJobs = [];
   const seenIds = new Set();
 
   for (const query of queries) {
     try {
-      const url = `${BASE_URL}/search?q=${encodeURIComponent(query)}&limit=35`;
+      let url = `${BASE_URL}/search?q=${encodeURIComponent(query)}&limit=35`;
+      if (regionCode) url += `&region=${encodeURIComponent(regionCode)}`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -28,10 +29,5 @@ export async function searchJobs(queries) {
     }
   }
 
-  // Filter to Stockholm area
-  return allJobs.filter((job) => {
-    const municipality = (job.workplace_address?.municipality || "").toLowerCase();
-    const region = (job.workplace_address?.region || "").toLowerCase();
-    return municipality.includes("stockholm") || region.includes("stockholm");
-  });
+  return allJobs;
 }

@@ -17,7 +17,8 @@ export default function ATSTip({ cvText }) {
       const result = await getTopATSTip(cvText);
       setTip(result);
     } catch (err) {
-      setError("Kunde inte hämta tips just nu. Försök igen.");
+      console.error("ATS tip error:", err);
+      setError(`${err.name}: ${err.message}` || "Okänt fel");
     } finally {
       setLoading(false);
     }

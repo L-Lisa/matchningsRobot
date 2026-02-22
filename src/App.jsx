@@ -17,6 +17,7 @@ export default function App() {
   const [step, setStep] = useState(STEPS.CV);
   const [jobs, setJobs] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
 
   async function handleSubmit(cvText) {
     setAppState("loading");
@@ -27,7 +28,7 @@ export default function App() {
       const profile = await extractKeywords(cvText);
 
       setStep(STEPS.SEARCH);
-      const jobAds = await searchJobs(profile.queries);
+      const jobAds = await searchJobs(profile.queries, selectedRegion);
 
       if (jobAds.length === 0) {
         setErrorMsg(
@@ -72,12 +73,22 @@ export default function App() {
 
       <main className={styles.main}>
         {appState === "idle" && (
-          <CVInput onSubmit={handleSubmit} loading={false} />
+          <CVInput
+            onSubmit={handleSubmit}
+            loading={false}
+            region={selectedRegion}
+            onRegionChange={setSelectedRegion}
+          />
         )}
 
         {appState === "loading" && (
           <>
-            <CVInput onSubmit={handleSubmit} loading={true} />
+            <CVInput
+              onSubmit={handleSubmit}
+              loading={true}
+              region={selectedRegion}
+              onRegionChange={setSelectedRegion}
+            />
             <StatusIndicator step={step} />
           </>
         )}
