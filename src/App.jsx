@@ -2,6 +2,7 @@ import { useState } from "react";
 import CVInput from "./components/CVInput";
 import StatusIndicator from "./components/StatusIndicator";
 import JobList from "./components/JobList";
+import LiquidEther from "./components/LiquidEther";
 import { extractKeywords, rankJobs } from "./services/claudeService";
 import { searchJobs } from "./services/afService";
 import styles from "./App.module.css";
@@ -68,6 +69,19 @@ export default function App() {
 
   return (
     <div className={styles.page}>
+      <div className={styles.background}>
+        <LiquidEther
+          colors={['#c4b5fd', '#f0abfc', '#93c5fd']}
+          autoDemo
+          autoSpeed={0.4}
+          autoIntensity={2.2}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous
+          viscous={30}
+          resolution={0.5}
+        />
+      </div>
       <header className={styles.header}>
         <h1 className={styles.title}>CV Jobbmatch</h1>
         <p className={styles.subtitle}>
