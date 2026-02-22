@@ -51,7 +51,11 @@ export default function App() {
       setJobs(rankedJobs);
       setAppState("done");
     } catch (err) {
-      setErrorMsg(err.message || "Ett oväntat fel uppstod. Försök igen.");
+      setErrorMsg(
+        err.message === "ROBOT_JUICE_EMPTY"
+          ? "Tillfälligt slut på robot-juice 🔋 Testversionen har nått sin AI-gräns för stunden. Vänta lite och prova igen en annan dag eller hör av dig!"
+          : err.message || "Ett oväntat fel uppstod. Försök igen."
+      );
       setAppState("error");
     }
   }

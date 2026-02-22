@@ -20,6 +20,9 @@ async function callClaude(system, userMessage, maxTokens) {
   });
 
   if (!response.ok) {
+    if (response.status === 401 || response.status === 429) {
+      throw new Error("ROBOT_JUICE_EMPTY");
+    }
     const err = await response.json().catch(() => ({}));
     throw new Error(err.error?.message || `Claude API error (${response.status})`);
   }
