@@ -43,14 +43,17 @@ export default function JobCard({ job }) {
       )}
 
       {webpage_url && (
-        <a
-          className={styles.link}
-          href={webpage_url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Visa annons på Platsbanken →
-        </a>
+        <div className={styles.linkBox}>
+          <span className={styles.linkLabel}>Länk till annons:</span>
+          <a
+            className={styles.link}
+            href={webpage_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {webpage_url}
+          </a>
+        </div>
       )}
     </article>
   );

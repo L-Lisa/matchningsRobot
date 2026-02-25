@@ -106,13 +106,26 @@
   font-weight: 700;
 }
 
-.link {
-  font-size: 0.875rem;
+.linkBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.linkLabel {
+  font-size: 0.75rem;
   font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.link {
+  font-size: 0.8rem;
   color: #2563eb;
   text-decoration: none;
-  margin-top: 4px;
-  align-self: flex-start;
+  word-break: break-all;
 }
 
 .link:hover {
