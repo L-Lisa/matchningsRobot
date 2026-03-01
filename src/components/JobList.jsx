@@ -1,7 +1,8 @@
 import JobCard from "./JobCard";
+import DeepDive from "./DeepDive";
 import styles from "./JobList.module.css";
 
-export default function JobList({ jobs, onReset }) {
+export default function JobList({ jobs, onReset, cvText, profile }) {
   return (
     <section className={styles.wrapper}>
       <div className={styles.resultHeader}>
@@ -15,6 +16,9 @@ export default function JobList({ jobs, onReset }) {
           <JobCard key={job.id} job={job} />
         ))}
       </div>
+      {cvText && profile && (
+        <DeepDive jobs={jobs} cvText={cvText} profile={profile} />
+      )}
     </section>
   );
 }

@@ -19,14 +19,18 @@ export default function App() {
   const [jobs, setJobs] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
+  const [cvText, setCvText] = useState("");
+  const [profile, setProfile] = useState(null);
 
-  async function handleSubmit(cvText) {
+  async function handleSubmit(submittedCvText) {
     setAppState("loading");
     setErrorMsg("");
+    setCvText(submittedCvText);
 
     try {
       setStep(STEPS.CV);
-      const profile = await extractKeywords(cvText);
+      const profile = await extractKeywords(submittedCvText);
+      setProfile(profile);
 
       setStep(STEPS.SEARCH);
       const jobAds = await searchJobs(profile.queries, selectedRegion);
@@ -65,6 +69,8 @@ export default function App() {
     setAppState("idle");
     setJobs([]);
     setErrorMsg("");
+    setCvText("");
+    setProfile(null);
   }
 
   return (
@@ -112,7 +118,7 @@ export default function App() {
         )}
 
         {appState === "done" && (
-          <JobList jobs={jobs} onReset={handleReset} />
+          <JobList jobs={jobs} onReset={handleReset} cvText={cvText} profile={profile} />
         )}
 
         {appState === "error" && (
