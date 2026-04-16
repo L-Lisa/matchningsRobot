@@ -1,8 +1,9 @@
 const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
-const MODEL = "claude-sonnet-4-6";
+const SONNET = "claude-sonnet-4-6";
+const HAIKU = "claude-haiku-4-5-20251001";
 const API_URL = "https://api.anthropic.com/v1/messages";
 
-async function callClaude(system, userMessage, maxTokens) {
+async function callClaude(system, userMessage, maxTokens, model = SONNET) {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {
@@ -12,7 +13,7 @@ async function callClaude(system, userMessage, maxTokens) {
       "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: maxTokens,
       system,
       messages: [{ role: "user", content: userMessage }],
@@ -86,7 +87,7 @@ export async function extractKeywords(cvText) {
 CV:
 ${cvText}`;
 
-  const text = await callClaude(system, user, 700);
+  const text = await callClaude(system, user, 700, HAIKU);
   return extractJSON(text);
 }
 

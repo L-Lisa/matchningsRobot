@@ -1,13 +1,20 @@
 const BASE_URL = "https://jobsearch.api.jobtechdev.se";
+const REMOTE_CODE = "remote";
 
-export async function searchJobs(queries, regionCode = "") {
+export async function searchJobs(queries, selectedRegions = []) {
   const allJobs = [];
   const seenIds = new Set();
 
+  const regionCodes = selectedRegions.filter((c) => c !== REMOTE_CODE);
+  const wantRemote = selectedRegions.includes(REMOTE_CODE);
+
   for (const query of queries) {
     try {
-      let url = `${BASE_URL}/search?q=${encodeURIComponent(query)}&limit=35`;
-      if (regionCode) url += `&region=${encodeURIComponent(regionCode)}`;
+      const searchTerm = wantRemote ? `${query} distans remote hybrid` : query;
+      let url = `${BASE_URL}/search?q=${encodeURIComponent(searchTerm)}&limit=35`;
+      for (const code of regionCodes) {
+        url += `&region=${encodeURIComponent(code)}`;
+      }
       const response = await fetch(url);
 
       if (!response.ok) {

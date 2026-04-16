@@ -18,7 +18,7 @@ export default function App() {
   const [step, setStep] = useState(STEPS.CV);
   const [jobs, setJobs] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedRegions, setSelectedRegions] = useState([]);
   const [cvText, setCvText] = useState("");
   const [profile, setProfile] = useState(null);
 
@@ -33,7 +33,7 @@ export default function App() {
       setProfile(profile);
 
       setStep(STEPS.SEARCH);
-      const jobAds = await searchJobs(profile.queries, selectedRegion);
+      const jobAds = await searchJobs(profile.queries, selectedRegions);
 
       if (jobAds.length === 0) {
         setErrorMsg(
@@ -46,12 +46,15 @@ export default function App() {
       setStep(STEPS.RANK);
       const rankings = await rankJobs(profile, jobAds);
 
-      const rankedJobs = rankings.slice(0, 5).map((r, rank) => ({
-        ...jobAds[r.idx],
-        rank: rank + 1,
-        score: r.score,
-        reasons: r.reasons,
-      }));
+      const rankedJobs = rankings
+        .slice(0, 5)
+        .filter((r) => r.idx >= 0 && r.idx < jobAds.length)
+        .map((r, rank) => ({
+          ...jobAds[r.idx],
+          rank: rank + 1,
+          score: r.score,
+          reasons: Array.isArray(r.reasons) ? r.reasons : [],
+        }));
 
       setJobs(rankedJobs);
       setAppState("done");
@@ -100,8 +103,8 @@ export default function App() {
           <CVInput
             onSubmit={handleSubmit}
             loading={false}
-            region={selectedRegion}
-            onRegionChange={setSelectedRegion}
+            regions={selectedRegions}
+            onRegionsChange={setSelectedRegions}
           />
         )}
 

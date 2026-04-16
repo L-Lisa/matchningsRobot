@@ -4,7 +4,6 @@ import ATSTip from "./ATSTip";
 import styles from "./CVInput.module.css";
 
 const REGIONS = [
-  { code: "", label: "Hela Sverige" },
   { code: "01", label: "Stockholms län" },
   { code: "03", label: "Uppsala län" },
   { code: "04", label: "Södermanlands län" },
@@ -28,11 +27,45 @@ const REGIONS = [
   { code: "25", label: "Norrbottens län" },
 ];
 
-export default function CVInput({ onSubmit, loading, region, onRegionChange }) {
+const REMOTE_CODE = "remote";
+
+export default function CVInput({ onSubmit, loading, regions, onRegionsChange }) {
   const [cvText, setCvText] = useState("");
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const textareaRef = useRef(null);
   const fileInputRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  function toggleRegion(code) {
+    onRegionsChange((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]
+    );
+  }
+
+  function getDropdownLabel() {
+    if (regions.length === 0) return "Hela Sverige";
+    const names = regions
+      .filter((c) => c !== REMOTE_CODE)
+      .map((c) => REGIONS.find((r) => r.code === c)?.label.replace(" län", ""))
+      .filter(Boolean);
+    const parts = [];
+    if (regions.includes(REMOTE_CODE)) parts.push("Distans");
+    parts.push(...names);
+    if (parts.length <= 2) return parts.join(", ");
+    return `${parts.length} valda`;
+  }
 
   // Auto-expand textarea height as content grows
   useEffect(() => {
@@ -90,22 +123,40 @@ export default function CVInput({ onSubmit, loading, region, onRegionChange }) {
         </div>
 
         <div className={styles.locationRow}>
-          <label className={styles.locationLabel} htmlFor="region">
-            Område
-          </label>
-          <select
-            id="region"
-            className={styles.select}
-            value={region}
-            onChange={(e) => onRegionChange(e.target.value)}
-            disabled={busy}
-          >
-            {REGIONS.map((r) => (
-              <option key={r.code} value={r.code}>
-                {r.label}
-              </option>
-            ))}
-          </select>
+          <label className={styles.locationLabel}>Område</label>
+          <div className={styles.dropdown} ref={dropdownRef}>
+            <button
+              type="button"
+              className={styles.dropdownToggle}
+              onClick={() => setDropdownOpen((o) => !o)}
+              disabled={busy}
+            >
+              {getDropdownLabel()}
+            </button>
+            {dropdownOpen && (
+              <div className={styles.dropdownMenu}>
+                <label className={styles.dropdownItem}>
+                  <input
+                    type="checkbox"
+                    checked={regions.includes(REMOTE_CODE)}
+                    onChange={() => toggleRegion(REMOTE_CODE)}
+                  />
+                  Distansarbete
+                </label>
+                <div className={styles.dropdownDivider} />
+                {REGIONS.map((r) => (
+                  <label key={r.code} className={styles.dropdownItem}>
+                    <input
+                      type="checkbox"
+                      checked={regions.includes(r.code)}
+                      onChange={() => toggleRegion(r.code)}
+                    />
+                    {r.label}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
